@@ -8,7 +8,7 @@ Die Seite ist eine einzelne statische Datei (`index.html`) und läuft auf GitHub
 
 - Der gesamte Inhalt (Stationen, Rätsel, Fragen, Zusatzaufgaben, Einstellungen) liegt nur verschlüsselt in `index.html`. Ohne Passwort ist er nicht lesbar, auch nicht im Quelltext.
 - Ein zufälliger Inhaltsschlüssel verschlüsselt den Inhalt (AES-GCM). Für jedes Team ist dieser Schlüssel mit einem aus dem Team-Passwort abgeleiteten Schlüssel verpackt (PBKDF2, SHA-256). Füllwerte verbergen, wie viele Teams es gibt.
-- Der Spielstand wird nur verschlüsselt im Browser gespeichert. Auf einem Handy muss das Passwort nur einmal eingegeben werden. Über „i“ und „Sperren“ lässt sich die Seite wieder sperren.
+- Der Spielstand wird nur verschlüsselt im Browser gespeichert. Auf einem Handy muss das Passwort nur einmal eingegeben werden.
 - Im Repository stehen weder Passwörter noch der Inhalt im Klartext.
 
 ## Inhalt bearbeiten
