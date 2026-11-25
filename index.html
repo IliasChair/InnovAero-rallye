@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>innovAero Rallye</title>
+<link rel="preload" href="fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Schriften liegen im Repository, damit keine Anfragen an Dritte gehen. */
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/barlow-condensed-600.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/barlow-condensed-700.woff2) format("woff2"); }
+@font-face { font-family: "Public Sans"; font-style: normal; font-weight: 400 700; font-display: swap; src: url(fonts/public-sans.woff2) format("woff2"); }
+:root {
+  --ink: #0e2433;
+  --muted: #4d606c;
+  --paper: #eef2f4;
+  --card: #ffffff;
+  --line: #c9d4da;
+  --bar: #0e2433;
+  --bar-ink: #f4f8fa;
+  --signal: #f4b400;
+  --signal-ink: #201700;
+  --brick: #a63d2a;
+  --ok: #1d7a4a;
+  --focus: #0b5fff;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e9f0f4;
+    --muted: #9fb2be;
+    --paper: #0a161e;
+    --card: #122430;
+    --line: #2a4352;
+    --bar: #06111a;
+    --brick: #e0775f;
+    --ok: #4cc58a;
+    --focus: #7db0ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #e9f0f4;
+  --muted: #9fb2be;
+  --paper: #0a161e;
+  --card: #122430;
+  --line: #2a4352;
+  --bar: #06111a;
+  --brick: #e0775f;
+  --ok: #4cc58a;
+  --focus: #7db0ff;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); }
+body { font: 400 18px/1.5 var(--body); -webkit-text-size-adjust: 100%; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.bar { position: sticky; top: 0; z-index: 5; background: var(--bar); color: var(--bar-ink); }
+.bar-in { max-width: 560px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
+.brand { flex: 1; min-width: 0; line-height: 1.1; }
+.brand b { display: block; font: 700 22px/1 var(--display); letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 459px) { body:not(.locked) .bar .clock { display: none; } }
+@media (max-width: 359px) { .brand b { font-size: 18px; } .bar-in { gap: 6px; } button.chip { padding: 8px; } }
+.brand span { display: block; font-size: 13px; opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip { font: 600 15px/1 var(--body); padding: 8px 10px; border: 1.5px solid rgba(255,255,255,.35); border-radius: 8px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.chip b { font-weight: 700; }
+button.chip { min-height: 44px; background: transparent; color: var(--bar-ink); cursor: pointer; }
+.info-btn { min-width: 44px; min-height: 44px; border-radius: 8px; border: 1.5px solid rgba(255,255,255,.35); background: transparent; color: var(--bar-ink); font: 700 18px/1 var(--body); cursor: pointer; }
+
+.wrap { max-width: 560px; margin: 0 auto; padding: 0 16px; }
+.route { list-style: none; margin: 14px 0 6px; padding: 0; display: flex; }
+.route li { flex: 1; position: relative; text-align: center; }
+.route li::before { content: ""; position: absolute; top: 16px; left: -50%; width: 100%; height: 4px; background: var(--line); }
+.route li:first-child::before { display: none; }
+.route li.done::before, .route li.now::before { background: var(--ink); }
+.route li span { position: relative; z-index: 1; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--line); background: var(--paper); font: 700 17px/1 var(--display); color: var(--muted); }
+.route li.done span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.route li.now span { background: var(--signal); border-color: var(--ink); color: var(--signal-ink); }
+
+main { padding-bottom: 48px; }
+.eyebrow { margin: 18px 0 0; font: 600 15px/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 4px 0 12px; font: 700 40px/1.02 var(--display); letter-spacing: .01em; text-wrap: balance; }
+h2 { margin: 0 0 6px; font: 700 24px/1.1 var(--display); letter-spacing: .02em; text-transform: uppercase; }
+h3 { margin: 18px 0 8px; font: 700 20px/1.1 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+p { margin: 0 0 12px; }
+.lead { font-size: 19px; }
+.muted { color: var(--muted); }
+
+.clue { background: var(--card); border: 2px solid var(--ink); border-left-width: 10px; border-left-color: var(--signal); border-radius: 12px; padding: 16px; margin: 6px 0 14px; }
+.clue .label { font: 600 14px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.clue .txt { font-size: 21px; line-height: 1.45; margin: 0; }
+
+.card { background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 16px; margin: 0 0 14px; }
+.card .tag { display: inline-block; font: 600 13px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.card.log { border: 2px solid var(--ink); }
+.card.done { border-color: var(--ok); border-width: 2px; }
+.note { border-left: 4px solid var(--line); padding: 2px 0 2px 12px; color: var(--muted); }
+.warn { background: var(--card); border: 2px solid var(--brick); border-radius: 10px; padding: 12px 14px; margin: 0 0 14px; }
+
+.btn { display: block; width: 100%; min-height: 58px; padding: 12px 16px; border-radius: 12px; border: 2.5px solid var(--ink); background: transparent; color: var(--ink); font: 700 22px/1.1 var(--display); letter-spacing: .04em; text-transform: uppercase; cursor: pointer; text-align: center; margin: 0 0 10px; }
+.btn.primary { background: var(--signal); border-color: var(--ink); color: var(--signal-ink); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.small { min-height: 48px; font-size: 18px; }
+.btn.opt { font: 600 20px/1.25 var(--body); letter-spacing: 0; text-transform: none; text-align: left; background: var(--card); }
+.btn.opt:disabled { text-decoration: line-through; }
+
+label.field { display: block; font-weight: 600; margin: 4px 0 6px; }
+input[type="text"], input[type="password"] { width: 100%; min-height: 54px; padding: 10px 14px; font: 400 20px/1.3 var(--body); color: var(--ink); background: var(--card); border: 2.5px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+input[type="text"]:focus, input[type="password"]:focus { border-color: var(--focus); outline: none; }
+body.locked .bar button { display: none; }
+.check { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 8px 4px; font-weight: 600; cursor: pointer; }
+.check input { width: 30px; height: 30px; flex: none; accent-color: var(--ink); }
+.msg { margin: 0 0 10px; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--line); background: var(--card); }
+.msg.ok { border-color: var(--ok); }
+.msg.bad { border-color: var(--brick); }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+ul.plain { margin: 0 0 12px; padding-left: 20px; }
+ul.plain li { margin-bottom: 8px; }
+ol.logl { list-style: none; margin: 8px 0 14px; padding: 0; font-variant-numeric: tabular-nums; }
+ol.logl li { padding: 6px 0; border-bottom: 1px solid var(--line); }
+ol.logl li b { display: inline-block; min-width: 3.4em; }
+
+#sheet { position: fixed; inset: 0; z-index: 10; background: var(--paper); overflow-y: auto; }
+#sheet[hidden] { display: none; }
+.sheet-in { max-width: 560px; margin: 0 auto; padding: 16px 16px 60px; }
+.sheet-in h2 { margin-top: 22px; }
+a { color: var(--focus); }
+@media (prefers-reduced-motion: no-preference) { .btn { transition: transform .08s; } .btn:active { transform: translateY(1px); } }
+</style>
+<body class="locked">
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand"><b>innovAero Rallye</b><span id="teamline"></span></div>
+    <div class="chip clock" aria-label="Uhrzeit"><span id="clock">--:--</span></div>
+    <button class="chip" data-act="wild-open" aria-label="Wildcards öffnen">Wildcards <b id="wn">0</b></button>
+    <button class="info-btn" data-act="sheet-open" aria-label="Regeln und Hilfe öffnen">i</button>
+  </div>
+</header>
+<div class="wrap">
+  <ol class="route" id="route" aria-label="Fortschritt"></ol>
+  <main id="stage" aria-live="polite"></main>
+</div>
+
+<section id="sheet" hidden aria-label="Regeln, Hilfe und Wildcards">
+  <div class="sheet-in" id="sheet-body"></div>
+</section>
+
+<!-- Verschlüsselter Inhalt. Wird von tools/build.mjs geschrieben, nicht von Hand ändern. -->
+<script type="application/json" id="vault">
+{"v":1,"iter":600000,"teams":{"a":{"label":"Team A","salt":"4uuV3vcWZZ7IqQBZSF2DNQ==","iv":"OqfCU2QiuZq9F9X/","wrapped":"hY4Vy5CGCKy2mhBEqU5ymzzREQNrvtbxIYH1M86TDbI0ZZynHZmWsvXNHraEVJPs"},"b":{"label":"Team B","salt":"70cY8m0GSS6r49m0Q046Mw==","iv":"Lf4tzXpAG2+Ffj3F","wrapped":"RQL0TrpDuJybOKSBDnoqZBJmOl94upizLdUBnUJd/aRpALI8Iqgp6C5zChYnSe8U"}},"content":{"iv":"2Onsja7wMkTBOhN6","ct":"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"}}
+</script>
+<script>
+(function () {
+  "use strict";
+
+  /* Die Seite enthält keine Rallye-Inhalte im Klartext. Stationen, Rätsel, Fragen, Wildcards und
+     Einstellungen liegen verschlüsselt im Block "vault" und werden erst mit dem Team-Passwort lesbar.
+     Der Spielstand wird nur verschlüsselt im Browser gespeichert. */
+  var VERSION = 4;
+  var VAULT = {};
+  try { VAULT = JSON.parse(document.getElementById("vault").textContent); } catch (e) {}
+  var TEAMS = VAULT.teams || {};
+
+  var C = null;            /* entschlüsselter Inhalt */
+  var stations = [], N = 0;
+  var state = fresh();
+  var sess = null;         /* { team, key } nach dem Entsperren */
+  var ui = { confirmHelp: false, confirmReset: false, sheet: "info", booting: true, gateTeam: null, gateMsg: "", busy: false };
+
+  /* ---------- Hilfsfunktionen ---------- */
+  function $(s) { return document.querySelector(s); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function nowHM() { var d = new Date(); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
+  function top() { window.scrollTo(0, 0); }
+  function cfg(k) { return (C && C.config && C.config[k]) || ""; }
+  function teamLabel() { return sess ? TEAMS[sess.team].label : ""; }
+  function wildCount() { return Object.keys(state.wild).filter(function (k) { return state.wild[k]; }).length; }
+  function orga() {
+    var p = cfg("orgaPhone");
+    if (p) return "Wenn ihr gar nicht weiterkommt: <a href=\"tel:" + esc(p.replace(/\s+/g, "")) + "\"><b>" + esc(p) + "</b></a>";
+    return "Die Nummer der Orga bekommt ihr beim Briefing.";
+  }
+  function photoNote() { return esc(cfg("photoNote") || "Wohin ihr die Fotos schickt, sagt die Orga beim Briefing."); }
+
+  /* ---------- Verschlüsselung ---------- */
+  function b64(buf) { var s = "", u = new Uint8Array(buf); for (var i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s); }
+  function unb64(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  function derive(team, pw) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(pw.trim().toLowerCase()), "PBKDF2", false, ["deriveKey"]).then(function (base) {
+      return crypto.subtle.deriveKey({ name: "PBKDF2", salt: unb64(TEAMS[team].salt), iterations: VAULT.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+    });
+  }
+  function decryptRaw(key, iv, ct) { return crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv) }, key, unb64(ct)); }
+  function decryptText(key, iv, ct) { return decryptRaw(key, iv, ct).then(function (b) { return new TextDecoder().decode(b); }); }
+  function encryptText(key, text) {
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    return crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, new TextEncoder().encode(text)).then(function (ct) { return { iv: b64(iv), ct: b64(ct) }; });
+  }
+  /* Team-Schlüssel entpackt den Inhaltsschlüssel, der den Inhalt entschlüsselt. Schlägt fehl, wenn das Passwort falsch ist. */
+  function openVault(team, key) {
+    var T = TEAMS[team];
+    return decryptRaw(key, T.iv, T.wrapped).then(function (raw) {
+      return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]);
+    }).then(function (cek) {
+      return decryptText(cek, VAULT.content.iv, VAULT.content.ct);
+    }).then(function (t) { return JSON.parse(t); });
+  }
+
+  /* ---------- Spielstand ---------- */
+  function storeKey(team) { return "innovaero-rallye-v" + VERSION + "-" + team; }
+  function fresh() {
+    return { v: VERSION, team: "", i: 0, phase: "here", solved: {}, wrong: {}, helped: {}, photo: {}, bonus: false, bonusWrong: [], wild: {}, times: {}, finish: "" };
+  }
+  function valid(d) { return d && d.v === VERSION && typeof d.i === "number" && d.i >= 0 && d.i < stations.length; }
+  function loadState() {
+    var raw = null, box;
+    try { raw = localStorage.getItem(storeKey(sess.team)); } catch (e) {}
+    if (!raw) return Promise.resolve(null);
+    try { box = JSON.parse(raw); } catch (e) { return Promise.resolve(null); }
+    return decryptText(sess.key, box.iv, box.ct).then(function (t) { var d = JSON.parse(t); return valid(d) ? d : null; }).catch(function () { return null; });
+  }
+  var saving = Promise.resolve();
+  function save() {
+    if (!sess) return;
+    var s = sess, text = JSON.stringify(state);
+    saving = saving.then(function () { return encryptText(s.key, text); }).then(function (box) {
+      try { localStorage.setItem(storeKey(s.team), JSON.stringify(box)); } catch (e) {}
+    }).catch(function () {});
+  }
+
+  /* Der Team-Schlüssel wird als nicht exportierbares Objekt in IndexedDB gemerkt,
+     damit das Passwort auf einem Handy nur einmal eingegeben werden muss. */
+  function idb(mode, fn) {
+    return new Promise(function (res, rej) {
+      var r = indexedDB.open("innovaero-rallye", 1);
+      r.onupgradeneeded = function () { r.result.createObjectStore("k"); };
+      r.onerror = function () { rej(r.error); };
+      r.onsuccess = function () {
+        var db = r.result, tx = db.transaction("k", mode), q = fn(tx.objectStore("k"));
+        tx.oncomplete = function () { db.close(); res(q.result); };
+        tx.onerror = tx.onabort = function () { db.close(); rej(tx.error); };
+      };
+    });
+  }
+  function remember(team, key) { return idb("readwrite", function (s) { return s.put({ team: team, key: key }, "session"); }).catch(function () {}); }
+  function recall() { return idb("readonly", function (s) { return s.get("session"); }).catch(function () { return null; }); }
+  function forget() { return idb("readwrite", function (s) { return s.delete("session"); }).catch(function () {}); }
+
+  function setContent(c) {
+    C = c;
+    stations = c.stations || [];
+    stations.forEach(function (s, i) { s.idx = i; s.num = (s.kind === "stop") ? i : 0; });
+    N = stations.length - 2;
+  }
+  function openSession(team, key, store) {
+    return openVault(team, key).then(function (c) {
+      setContent(c);
+      sess = { team: team, key: key };
+      return loadState();
+    }).then(function (d) {
+      state = d || fresh();
+      ui.busy = false; ui.booting = false; ui.gateTeam = null; ui.gateMsg = "";
+      if (store) remember(team, key);
+      render(); top();
+    });
+  }
+  function unlock(team, pw) {
+    if (!pw || !pw.trim()) { ui.gateMsg = "Bitte das Passwort eingeben."; render(); return; }
+    ui.busy = true; ui.gateMsg = ""; render();
+    derive(team, pw).then(function (key) { return openSession(team, key, true); }).catch(function () {
+      ui.busy = false; ui.gateMsg = "Das Passwort passt nicht. Probiert es noch einmal."; render();
+      var p = $("#pw"); if (p) p.focus();
+    });
+  }
+  function lock() {
+    sess = null; C = null; stations = []; state = fresh(); ui.confirmReset = false; ui.gateTeam = null; ui.gateMsg = "";
+    forget(); $("#sheet").hidden = true; render(); top();
+  }
+
+  /* ---------- Darstellung ---------- */
+  function renderRoute() {
+    var h = "";
+    for (var k = 0; k < stations.length; k++) {
+      var label = k === 0 ? "S" : (k === stations.length - 1 ? "Z" : String(k));
+      var cls = (state.phase === "finished" || k < state.i) ? "done" : (k === state.i ? "now" : "");
+      h += "<li class=\"" + cls + "\"><span>" + label + "</span></li>";
+    }
+    $("#route").innerHTML = h;
+  }
+  function renderHeader() {
+    document.body.classList.toggle("locked", !sess);
+    $("#wn").textContent = String(wildCount());
+    $("#teamline").textContent = !sess ? "City Rallye" : (state.team ? teamLabel() + ": " + state.team : teamLabel());
+    $("#clock").textContent = nowHM();
+  }
+
+  function renderGate() {
+    $("#route").innerHTML = "";
+    var h;
+    if (ui.booting) {
+      h = "<p class=\"eyebrow\">Start</p><h1>Einen Moment</h1><p class=\"muted\">Die Rallye wird geladen.</p>";
+    } else if (!Object.keys(TEAMS).length) {
+      h = "<p class=\"eyebrow\">Start</p><h1>Noch nicht bereit</h1><p class=\"lead\">Die Rallye ist noch nicht eingerichtet.</p>";
+    } else if (!ui.gateTeam) {
+      h = "<p class=\"eyebrow\">Start</p><h1>Welches Team seid ihr?</h1>";
+      h += "<p class=\"lead\">Wählt euer Team. Danach gebt ihr einmal das Passwort ein, das ihr beim Briefing bekommt.</p>";
+      Object.keys(TEAMS).forEach(function (k) {
+        h += "<button class=\"btn primary\" data-act=\"gate-team\" data-team=\"" + esc(k) + "\">" + esc(TEAMS[k].label) + "</button>";
+      });
+    } else {
+      h = "<p class=\"eyebrow\">" + esc(TEAMS[ui.gateTeam].label) + "</p><h1>Passwort</h1>";
+      h += "<form id=\"gate\" novalidate><label class=\"field\" for=\"pw\">Passwort vom Briefing</label>";
+      h += "<input type=\"password\" id=\"pw\" autocomplete=\"current-password\" autocapitalize=\"none\" autocorrect=\"off\" spellcheck=\"false\"" + (ui.busy ? " disabled" : "") + ">";
+      if (ui.gateMsg) h += "<p class=\"msg bad\">" + esc(ui.gateMsg) + "</p>";
+      h += "<button class=\"btn primary\" type=\"submit\"" + (ui.busy ? " disabled" : "") + ">" + (ui.busy ? "Wird geprüft" : "Entsperren") + "</button></form>";
+      h += "<button class=\"btn small\" data-act=\"gate-back\"" + (ui.busy ? " disabled" : "") + ">Anderes Team wählen</button>";
+      h += "<p class=\"muted\">Auf diesem Handy müsst ihr das Passwort nur einmal eingeben. Groß- und Kleinschreibung ist egal.</p>";
+    }
+    $("#stage").innerHTML = h;
+  }
+
+  function renderTravel(st) {
+    var label = st.kind === "finish" ? "Unterwegs zum Ziel" : "Unterwegs zu Station " + st.num;
+    var h = "<p class=\"eyebrow\">" + (st.kind === "finish" ? "Letzte Etappe" : "Station " + st.num + " von " + N) + "</p>";
+    h += "<h1>" + label + "</h1>";
+    h += "<div class=\"clue\"><div class=\"label\">Hinweis</div><p class=\"txt\">" + esc(st.riddle) + "</p></div>";
+    if (st.eta) h += "<p class=\"muted\">Richtwert: " + esc(st.eta) + ". Löst das Rätsel schon beim Gehen.</p>";
+    h += "<button class=\"btn primary\" data-act=\"arrive\">Wir sind da</button>";
+    if (state.helped[st.id]) {
+      h += "<div class=\"msg\">Euer Ziel: <b>" + esc(st.name) + "</b></div>";
+    } else if (ui.confirmHelp) {
+      h += "<div class=\"msg\">Das Ziel jetzt verraten?</div><div class=\"row\"><button class=\"btn small\" data-act=\"help-yes\">Ja, verraten</button><button class=\"btn small\" data-act=\"help-no\">Abbrechen</button></div>";
+    } else {
+      h += "<button class=\"btn small\" data-act=\"help-ask\">Ziel verraten</button>";
+    }
+    h += "<button class=\"btn small\" data-act=\"wild-open\">Wildcards ansehen</button>";
+    h += "<p class=\"muted\">" + orga() + "</p>";
+    $("#stage").innerHTML = h;
+  }
+
+  function ready(st) {
+    if (st.motif && !state.photo[st.id]) return false;
+    if (st.q && !state.solved[st.id]) return false;
+    return true;
+  }
+
+  function choiceBlock(q, solved, wrongList, act) {
+    var h = "";
+    if (solved) return "<p class=\"msg ok\">Richtig: " + esc(q.answer) + "</p>";
+    q.opts.forEach(function (o, k) {
+      var off = wrongList.indexOf(k) >= 0;
+      h += "<button class=\"btn opt\" data-act=\"" + act + "\" data-k=\"" + k + "\"" + (off ? " disabled" : "") + ">" + esc(o) + "</button>";
+    });
+    if (wrongList.length) h += "<p class=\"msg bad\">Nicht ganz. Probiert eine andere Antwort.</p>";
+    return h;
+  }
+
+  function renderHere(st) {
+    var first = st.kind === "start";
+    var nextIsFinish = stations[st.idx + 1] && stations[st.idx + 1].kind === "finish";
+    var h = "<p class=\"eyebrow\">" + (first ? "Start" : "Station " + st.num + " von " + N) + "</p><h1>" + esc(st.name) + "</h1>";
+    if (st.intro) h += "<p class=\"lead\">" + esc(st.intro) + "</p>";
+    if (first) h += "<label class=\"field\" for=\"team\">Teamname (freiwillig)</label><input type=\"text\" id=\"team\" maxlength=\"40\" autocomplete=\"off\" value=\"" + esc(state.team) + "\" placeholder=\"Muss nicht sein\">";
+    if (st.note) h += "<p class=\"note\">" + esc(st.note) + "</p>";
+
+    if (st.motif) {
+      h += "<div class=\"card\"><span class=\"tag\">" + (first ? "Beweisfoto" : "Motivaufgabe") + "</span><p>" + esc(st.motif) + "</p>";
+      h += "<label class=\"check\"><input type=\"checkbox\" id=\"photo\"" + (state.photo[st.id] ? " checked" : "") + "><span>Foto ist gemacht</span></label>";
+      h += "<p class=\"muted\" style=\"margin:0\">" + photoNote() + "</p></div>";
+    }
+
+    if (st.q) {
+      h += "<div class=\"card\"><span class=\"tag\">Wissensfrage</span><p>" + esc(st.q.text) + "</p>";
+      h += choiceBlock(st.q, state.solved[st.id] === true, state.wrong[st.id] || [], "pick");
+      h += "</div>";
+    }
+
+    if (st.bonus) {
+      h += "<div class=\"card\"><span class=\"tag\">Bonusfrage</span><p>" + esc(st.bonus.text) + "</p>";
+      h += choiceBlock(st.bonus, state.bonus, state.bonusWrong, "pick-bonus");
+      h += "</div>";
+    }
+
+    if (st.wildHint) {
+      h += "<div class=\"card\"><span class=\"tag\">Wildcard, freiwillig</span><p>Hier sind viele Leute unterwegs. Eine gute Gelegenheit für eine Wildcard, wenn euer Team Lust hat.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">Wildcards ansehen</button></div>";
+    }
+    if (first) {
+      h += "<div class=\"card\"><span class=\"tag\">Wildcards, freiwillig</span><p>Unterwegs könnt ihr kleine Zusatzaufgaben machen, zum Beispiel einen Passanten ansprechen. Euer Team entscheidet, ob und welche. Sie landen in eurem Logbuch.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">Wildcards ansehen</button></div>";
+    }
+
+    if (st.skip) {
+      h += "<div class=\"warn\"><b>" + esc(st.skip.title || "Zeitregel") + ":</b> " + esc(st.skip.text) + "</div>";
+    }
+
+    var label = first ? "Rallye starten, erstes Rätsel zeigen" : (nextIsFinish ? "Rätsel für das Ziel zeigen" : "Rätsel für die nächste Station zeigen");
+    h += "<button class=\"btn primary\" id=\"next\" data-act=\"next\"" + (ready(st) ? "" : " disabled") + ">" + label + "</button>";
+    if (st.skip) {
+      h += "<button class=\"btn small\" data-act=\"skip\"" + (ready(st) ? "" : " disabled") + ">" + esc(st.skip.button || "Direkt zum Ziel") + "</button>";
+    }
+    h += "<p class=\"muted\">" + orga() + "</p>";
+    $("#stage").innerHTML = h;
+  }
+
+  function logbook() {
+    var h = "<div class=\"card log\"><span class=\"tag\">Logbuch</span><h2>" + esc(state.team || teamLabel()) + "</h2>";
+    if (state.team) h += "<p class=\"muted\" style=\"margin:0\">" + esc(teamLabel()) + "</p>";
+    if (C.dateLine) h += "<p class=\"muted\">" + esc(C.dateLine) + "</p>";
+    h += "<ol class=\"logl\">";
+    stations.forEach(function (s) {
+      var t = state.times[s.id];
+      if (t) h += "<li><b>" + esc(t) + "</b> " + esc(s.name) + (s.kind === "start" ? " (Start)" : "") + "</li>";
+    });
+    h += "</ol>";
+    var done = (C.wild || []).filter(function (w) { return state.wild[w.id]; });
+    if (done.length) {
+      h += "<p style=\"margin:0\"><b>Wildcards</b></p><ul class=\"plain\" style=\"margin:4px 0 0\">";
+      done.forEach(function (w) { h += "<li>" + esc(w.short) + "</li>"; });
+      h += "</ul>";
+    } else {
+      h += "<p class=\"muted\" style=\"margin:0\">Keine Wildcards diesmal. Das ist völlig in Ordnung.</p>";
+    }
+    h += "</div>";
+    return h;
+  }
+
+  function after() {
+    var a = C.after;
+    if (!a) return "";
+    var h = "<h2>" + esc(a.h || "Danach") + "</h2>";
+    if (a.p) h += "<p>" + esc(a.p) + "</p>";
+    if (a.items && a.items.length) {
+      h += "<ul class=\"plain\">";
+      a.items.forEach(function (it) { h += "<li>" + (it.b ? "<b>" + esc(it.b) + ":</b> " : "") + esc(it.t) + "</li>"; });
+      h += "</ul>";
+    }
+    if (cfg("meetup")) h += "<p><b>" + esc(cfg("meetup")) + "</b></p>";
+    return h;
+  }
+
+  function renderFinish() {
+    var n = wildCount();
+    var ziel = stations[stations.length - 1];
+    var h = "<p class=\"eyebrow\">Ziel erreicht</p><h1>Geschafft" + (state.team ? ", " + esc(state.team) : "") + "</h1>";
+    h += "<p class=\"lead\">Ankunft um <b>" + esc(state.finish) + "</b>." + (ziel.arrival ? " " + esc(ziel.arrival) : "") + "</p>";
+    if (cfg("reward")) h += "<div class=\"card\"><span class=\"tag\">Für euch</span><p style=\"margin:0\">" + esc(cfg("reward")) + "</p></div>";
+    if (cfg("wildReward") && n > 0) h += "<div class=\"card\"><span class=\"tag\">Für eure Wildcards</span><p style=\"margin:0\">Ihr habt " + (n === 1 ? "eine Wildcard" : n + " Wildcards") + " geschafft. " + esc(cfg("wildReward")) + "</p></div>";
+    h += logbook();
+    h += "<p class=\"muted\">Macht einen Screenshot vom Logbuch als Erinnerung. " + photoNote() + "</p>";
+    h += after();
+    h += "<p class=\"muted\">" + orga() + "</p>";
+    $("#stage").innerHTML = h;
+  }
+
+  function render() {
+    renderHeader();
+    if (!sess) { renderGate(); return; }
+    renderRoute();
+    var st = stations[state.i];
+    if (state.phase === "finished") renderFinish();
+    else if (st.kind !== "start" && state.phase === "travel") renderTravel(st);
+    else renderHere(st);
+  }
+
+  function infoSheet() {
+    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Zurück zur Rallye</button>";
+    (C.info || []).forEach(function (sec) {
+      h += "<h2>" + esc(sec.h) + "</h2>";
+      if (sec.p) h += "<p>" + esc(sec.p) + "</p>";
+      if (sec.list) { h += "<ul class=\"plain\">"; sec.list.forEach(function (li) { h += "<li>" + esc(li) + "</li>"; }); h += "</ul>"; }
+    });
+    h += "<button class=\"btn small\" data-act=\"wild-open\">Wildcards ansehen</button>";
+    h += "<h2>Hilfe</h2><p>" + orga() + "</p>";
+    h += "<h2>Fotos</h2><p>" + photoNote() + "</p>";
+    h += "<h2>Handy weitergeben</h2><p>Sperrt die Seite, bevor ihr das Handy aus der Hand gebt. Euer Stand bleibt verschlüsselt gespeichert und ist nach dem Passwort wieder da.</p>";
+    h += "<button class=\"btn small\" data-act=\"lock\">Sperren</button>";
+    h += "<h2>Neu beginnen</h2>";
+    if (ui.confirmReset) h += "<p class=\"msg bad\">Alle Eingaben dieses Teams gehen verloren.</p><div class=\"row\"><button class=\"btn small\" data-act=\"reset-yes\">Ja, zurücksetzen</button><button class=\"btn small\" data-act=\"reset-no\">Abbrechen</button></div>";
+    else h += "<button class=\"btn small\" data-act=\"reset-ask\">Eingaben zurücksetzen</button>";
+    return h;
+  }
+
+  function wildSheet() {
+    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Zurück zur Rallye</button>";
+    h += "<h2>Wildcards</h2><p>Freiwillige Zusatzaufgaben. Euer Team entscheidet, ob und welche es macht, und ihr könnt sie unterwegs jederzeit erledigen. Tippt danach auf den Knopf. Wer lieber nicht möchte, lässt es aus.</p>";
+    h += "<p class=\"note\">Bitte kein Foto und kein Video von Fremden ohne ihr Einverständnis. Ein Nein gilt sofort. Kein Körperkontakt, kein Alkohol, kein Geld.</p>";
+    var wild = C.wild || [], levels = [];
+    wild.forEach(function (w) { if (levels.indexOf(w.lvl) < 0) levels.push(w.lvl); });
+    levels.forEach(function (lvl) {
+      h += "<h3>" + esc(lvl) + "</h3>";
+      wild.filter(function (w) { return w.lvl === lvl; }).forEach(function (w) {
+        var on = !!state.wild[w.id];
+        h += "<div class=\"card" + (on ? " done" : "") + "\"><p>" + esc(w.t) + "</p>";
+        h += "<button class=\"btn small\" data-act=\"wild-toggle\" data-id=\"" + esc(w.id) + "\" style=\"margin:0\">" + (on ? "Erledigt, antippen zum Rückgängigmachen" : "Das haben wir gemacht") + "</button></div>";
+      });
+    });
+    return h;
+  }
+
+  function renderSheet() { $("#sheet-body").innerHTML = ui.sheet === "wild" ? wildSheet() : infoSheet(); }
+  function openSheet(kind) { ui.sheet = kind; renderSheet(); $("#sheet").hidden = false; $("#sheet").scrollTop = 0; }
+
+  /* ---------- Aktionen ---------- */
+  function go(act, el) {
+    if (act === "gate-team") { ui.gateTeam = el.getAttribute("data-team"); ui.gateMsg = ""; render(); var p = $("#pw"); if (p) p.focus(); return; }
+    if (act === "gate-back") { ui.gateTeam = null; ui.gateMsg = ""; render(); return; }
+    if (!sess) return;
+    var st = stations[state.i];
+    if (act === "lock") { lock();
+    } else if (act === "arrive") {
+      state.times[st.id] = nowHM();
+      if (st.kind === "finish") { state.phase = "finished"; state.finish = nowHM(); }
+      else state.phase = "here";
+      ui.confirmHelp = false;
+      save(); render(); top();
+    } else if (act === "help-ask") { ui.confirmHelp = true; render();
+    } else if (act === "help-no") { ui.confirmHelp = false; render();
+    } else if (act === "help-yes") { state.helped[st.id] = true; ui.confirmHelp = false; save(); render();
+    } else if (act === "pick") {
+      var k = parseInt(el.getAttribute("data-k"), 10);
+      if (k === st.q.correct) { state.solved[st.id] = true; }
+      else { var w = state.wrong[st.id] || []; if (w.indexOf(k) < 0) w.push(k); state.wrong[st.id] = w; }
+      save(); render();
+    } else if (act === "pick-bonus") {
+      var kb = parseInt(el.getAttribute("data-k"), 10);
+      if (kb === st.bonus.correct) { state.bonus = true; }
+      else if (state.bonusWrong.indexOf(kb) < 0) { state.bonusWrong.push(kb); }
+      save(); render();
+    } else if (act === "next") {
+      if (!ready(st)) return;
+      if (st.kind === "start") state.times[st.id] = nowHM();
+      state.i += 1; state.phase = "travel"; ui.confirmHelp = false;
+      save(); render(); top();
+    } else if (act === "skip") {
+      if (!st.skip || !ready(st)) return;
+      state.i = stations.length - 1; state.phase = "travel"; ui.confirmHelp = false;
+      save(); render(); top();
+    } else if (act === "sheet-open") { openSheet("info");
+    } else if (act === "wild-open") { openSheet("wild");
+    } else if (act === "sheet-close") { $("#sheet").hidden = true; ui.confirmReset = false;
+    } else if (act === "wild-toggle") {
+      var id = el.getAttribute("data-id");
+      if (state.wild[id]) delete state.wild[id]; else state.wild[id] = true;
+      save(); renderHeader(); renderSheet();
+    } else if (act === "reset-ask") { ui.confirmReset = true; renderSheet();
+    } else if (act === "reset-no") { ui.confirmReset = false; renderSheet();
+    } else if (act === "reset-yes") { state = fresh(); ui.confirmReset = false; save(); $("#sheet").hidden = true; render(); top(); }
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]");
+    if (b && !b.disabled) go(b.getAttribute("data-act"), b);
+  });
+  document.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "gate") { e.preventDefault(); if (!ui.busy && ui.gateTeam) unlock(ui.gateTeam, $("#pw").value); }
+  });
+  document.addEventListener("change", function (e) {
+    if (sess && e.target && e.target.id === "photo") {
+      state.photo[stations[state.i].id] = e.target.checked; save(); render();
+    }
+  });
+  document.addEventListener("input", function (e) {
+    if (sess && e.target && e.target.id === "team") { state.team = e.target.value; save(); renderHeader(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !$("#sheet").hidden) go("sheet-close");
+  });
+
+  /* ---------- Start ---------- */
+  function boot() {
+    if (!(window.crypto && crypto.subtle && window.TextEncoder)) {
+      renderHeader();
+      $("#stage").innerHTML = "<p class=\"eyebrow\">Start</p><h1>Browser zu alt</h1><p class=\"lead\">Dieser Browser kann die Rallye nicht entsperren. Öffnet die Seite bitte in einem aktuellen Safari oder Chrome.</p>";
+      return;
+    }
+    render();
+    recall().then(function (r) {
+      if (!r || !r.key || !TEAMS[r.team]) throw new Error("none");
+      return openSession(r.team, r.key, false);
+    }).catch(function () {
+      forget(); sess = null; C = null; stations = []; state = fresh(); ui.booting = false; render();
+    });
+  }
+  boot();
+  setInterval(function () { var c = $("#clock"); if (c) c.textContent = nowHM(); }, 15000);
+})();
+</script>
+</body>
+</html>
