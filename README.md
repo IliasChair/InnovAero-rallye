@@ -1,6 +1,6 @@
 # innovAero Rallye
 
-Handy-Seite für eine Rallye. Die Teams öffnen die Seite im Browser und entsperren sie mit dem Passwort, das sie beim Briefing bekommen. Danach führt die Seite Schritt für Schritt durch die Rallye. Alles geht per Antippen.
+Handy-Seite für eine Rallye. Die Teams öffnen die Seite im Browser und entsperren sie mit dem Passwort, das sie beim Briefing bekommen. Danach führt die Seite Schritt für Schritt durch die Rallye. Einmal geladen, funktioniert sie auch ohne Empfang (`sw.js`).
 
 Die Seite ist eine einzelne statische Datei (`index.html`) und läuft auf GitHub Pages. Sie lädt nichts von Drittanbietern, auch die Schriften liegen im Repository.
 
