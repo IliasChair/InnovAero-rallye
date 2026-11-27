@@ -1,25 +1,25 @@
 # innovAero Rallye
 
-Handy-Seite für eine Rallye. Die Teams öffnen die Seite im Browser und entsperren sie mit dem Passwort, das sie beim Briefing bekommen. Danach führt die Seite Schritt für Schritt durch die Rallye. Einmal geladen, funktioniert sie auch ohne Empfang (`sw.js`).
+Handy-Seite für eine Rallye. Die Teams öffnen die Seite im Browser und entsperren sie mit dem Passwort, das sie beim Briefing bekommen. Am Passwort erkennt die Seite das Team. Danach führt die Seite Schritt für Schritt durch die Rallye. Einmal geladen, funktioniert sie auch ohne Empfang (`sw.js`).
 
 Die Seite ist eine einzelne statische Datei (`index.html`) und läuft auf GitHub Pages. Sie lädt nichts von Drittanbietern, auch die Schriften liegen im Repository.
 
 ## Verschlüsselung
 
 - Der gesamte Inhalt (Stationen, Rätsel, Fragen, Zusatzaufgaben, Einstellungen) liegt nur verschlüsselt in `index.html`. Ohne Passwort ist er nicht lesbar, auch nicht im Quelltext.
-- Ein zufälliger Inhaltsschlüssel verschlüsselt den Inhalt (AES-GCM). Dieser Schlüssel ist mit einem aus dem Passwort abgeleiteten Schlüssel verpackt (PBKDF2, SHA-256).
+- Ein zufälliger Inhaltsschlüssel verschlüsselt den Inhalt (AES-GCM). Für jedes Team ist dieser Schlüssel mit einem aus dem Team-Passwort abgeleiteten Schlüssel verpackt (PBKDF2, SHA-256). Füllwerte verbergen, wie viele Teams es gibt.
 - Der Spielstand wird nur verschlüsselt im Browser gespeichert. Auf einem Handy muss das Passwort nur einmal eingegeben werden.
-- Im Repository stehen weder das Passwort noch der Inhalt im Klartext.
+- Im Repository stehen weder Passwörter noch der Inhalt im Klartext.
 
 ## Inhalt bearbeiten
 
 Der Inhalt liegt im Klartext in `content.json`. Diese Datei ist in `.gitignore` eingetragen und wird nicht hochgeladen. Nach jeder Änderung:
 
 ```bash
-node tools/build.mjs PASSWORT
+node tools/build.mjs airbus=PASSWORT boeing=PASSWORT
 ```
 
-Das Skript verschlüsselt `content.json` und schreibt das Ergebnis in `index.html`. Danach `index.html` committen. Bleibt das Passwort gleich, bleibt der Spielstand auf den Handys erhalten. Ein neues Passwort setzt ihn zurück.
+Das Skript verschlüsselt `content.json` und schreibt das Ergebnis in `index.html`. Danach `index.html` committen. Bleibt ein Passwort gleich, bleibt der Spielstand dieses Teams auf den Handys erhalten. Ein neues Passwort setzt ihn zurück.
 
 ## Schriften
 

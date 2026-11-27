@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<title>innovAero City Rallye</title>
+<title>innovAero City Rally</title>
 <link rel="preload" href="fonts/public-sans.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Schriften liegen im Repository, damit keine Anfragen an Dritte gehen. */
@@ -170,24 +170,24 @@ a { color: var(--focus); }
 <body class="locked">
 <header class="bar">
   <div class="bar-in">
-    <div class="brand"><b>innovAero Rallye</b><span id="teamline"></span></div>
+    <div class="brand"><b>innovAero Rally</b><span id="teamline"></span></div>
     <div class="chip clock" aria-label="Uhrzeit"><span id="clock">--:--</span></div>
-    <button class="chip" data-act="wild-open" aria-label="Wildcards öffnen">Wildcards <b id="wn">0</b></button>
-    <button class="info-btn" data-act="sheet-open" aria-label="Regeln und Hilfe öffnen">i</button>
+    <button class="chip" data-act="wild-open" aria-label="Open wildcards">Wildcards <b id="wn">0</b></button>
+    <button class="info-btn" data-act="sheet-open" aria-label="Open rules and help">i</button>
   </div>
 </header>
 <div class="wrap">
-  <ol class="route" id="route" aria-label="Fortschritt"></ol>
+  <ol class="route" id="route" aria-label="Progress"></ol>
   <main id="stage" aria-live="polite"></main>
 </div>
 
-<section id="sheet" hidden aria-label="Regeln, Hilfe und Wildcards">
+<section id="sheet" hidden aria-label="Rules, help and wildcards">
   <div class="sheet-in" id="sheet-body"></div>
 </section>
 
 <!-- Verschlüsselter Inhalt. Wird von tools/build.mjs geschrieben, nicht von Hand ändern. -->
 <script type="application/json" id="vault">
-{"v":2,"iter":600000,"salt":"RRnTGhO2j3JglFYYo7AIFg==","slots":[{"iv":"KvfxgufInU4JUVK7","ct":"zgM3gGmzDxptvba12JHLC0I1ve1odIlHI9JF3QbL6CvOqemtr9OQebobtPGs/oO3gvXTZcre3SCAERgLHGbgvXO9vV+/DQISW8/R2ggv3yTI"},{"iv":"FfYyQFx2nkn/5nls","ct":"nWHNNsRXR6nSAZ8AR6VclqzwBCwoZAcV3Wr2R2JJZXNQRGIgT9y5kGnbqK4OtS+EQA8B4Ctp7vrg/pEd5xyle/dHXRxwPerEgS/LUXgFqKdv"},{"iv":"JT57r/a0V/303O25","ct":"40h5JTFFdf+LkwtWb6D372h5WId5gVZCeq00/ajSz7nqjIm431aPLAqzBJRzZhemU1qHc5zD6rSzxjjog9XahBxDh4RQNmdjw8FCQLH2lAIP"},{"iv":"5O5fWcfpKcvaSM4A","ct":"G1WuyTCPnkYSpg6ZWqtLkEJFhEdItoepxTCdcZBoO9a0zNDA/PbCzsWLV4EAWyXapxPZ3p66lXvDBxPOVggDmZKZeQbDK9gg7V9jMCqcABCR"},{"iv":"F7o7FrotQu2ESgRP","ct":"rwAmmvjtK7YtLjm9sAVWjI2y0DskcOwfwwXEy4cobx0aQCbq8KS0fDoSCKJlNp8Mqz3PJE0bHvnV+M9vpBQNCMAafgLt1tQQ7cU0z1OfaGS4"},{"iv":"ye+G+BAmCC55umU/","ct":"HAcQLRphA6YpMddzG4VC9+kKd9EoZ6tuRiuTiRqjJwrKTGZmiconcAiTusTZXAGCFgXckbOYm/Jg3ka5+fHdYDje9MkZA5Qdy2KPoQG75rT4"},{"iv":"RqbYycn8IKS7ZUyr","ct":"Ft8ye5GbxBp1sFJY71HMSUu9VX/fS8nfIzE6zmgZbO7f5b3gvUiU+nxTLDqN9UKYWRsnAx1MUm4KSd0Rzer+xpUWjKTX44bca1y88NImVCDf"},{"iv":"FOBzuYvdNaW+dmSe","ct":"J98WROtSVvCBIaG8+v745lbJKEjao/IudQnufJn6Y8Ea+6GbxY8SRdFV4Xu3392S2z3sPbjsu8bhdJ5Jovbhy863G/xA4+/Ot+S8yAbIQVpP"}],"content":{"iv":"K851W2hSXn6V+g3q","ct":"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"}}
+{"v":2,"iter":600000,"salt":"GwMbCWVJzjcNvUN2sJAokA==","slots":[{"iv":"DWVqUZBw1GY5uRuV","ct":"UIviiYvfooOTGJGbNLtrbyerRN6FdxUisle8XbjVfxlBJFdCaVs61GgPRv4c5k9uFpu1/WBBbNugrezCv0sDXjuBpfaHCSvjEH7rbvs8i3nr"},{"iv":"gPOWCyaCMPzYJnMh","ct":"0p9DSWTUOWEJS56gvZssA12BmG4NISfbj5wiBMTqOOiWB2AliU99+7RzBPmpqpfiNFxxL/qOJuxnP6ZRkJbWXn0371FTs4Cb/Zk2aGCTqVbO"},{"iv":"LVkTgm5m11wRCH/r","ct":"4VEtyKhfT8jCXV0DF+e1TUueLm+em/FHEj8HlMQ+1TfEc1yZCa5aLhX3Twga3f6cOSjPsgONrrxqvKooDrbOXNZWdmAhJs3RxhiVPJKh6fvo"},{"iv":"jeoi8zAyRvAvRp6v","ct":"6C/uJTwGqRlQguuMinb1pGXbkBZDgpVWPYpR9ri7r8VQKyKysKH5SPivAI9qfNpnAz/Dl2GFLIrEGUk7cxljKaJJKPDBgbpsTC9k86y/AxuG"},{"iv":"9J4YkjjBM2ZP6z0u","ct":"KL2EWstSTvXY19S5hAkvjouB1Lj2Liyro14pJM5USB6CsiYvXyopVXqOCoXbfk2L9P6ZNwTtbcOOXaBPrtbX4dCab0EGv/+8nJf/Ktf+8PC7"},{"iv":"3irSlcqedrg45e5u","ct":"jceDQU85Q8RLYb2sGfjuFj5eWEehfrsSWsoIdpRpuqYBO7iXie8FgonS+npKq2l9e23AeBCIOK01le3v9xNuH91qF2Rpzb9Y3gA4cSIzdVca"},{"iv":"VfaqfSegnekyINRV","ct":"wiYQoSu63OOxh3obx6D9qv8k3n/MvgRe7PF8RAPLTFc9yiAMa/qMhLY6wHCiid84mW49vtfHBuckvA7ZHeF+XhPy15liwArw9JchYI481/TY"},{"iv":"Jrbc4reTDtPTnxIO","ct":"WvtbMtdBxLXZxBmHZQHIyhpeVA9f+kEj7u3eL7z+SCgehlUYDYow9UO+HimzHpcXHpnACyyhulQvQxfDqi/R3nnFhcaXIBpiVZ/Nx1ZI1NM5"}],"content":{"iv":"/MKWFYzGHyUkd1vf","ct":"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"}}
 </script>
 <script>
 (function () {
@@ -229,7 +229,21 @@ a { color: var(--focus); }
     return t;
   }
   function eyebrow(label) {
-    return "<p class=\"eyebrow\"><span>" + label + "</span>" + (scoring() ? "<span>" + totals().all + " Punkte</span>" : "") + "</p>";
+    return "<p class=\"eyebrow\"><span>" + label + "</span>" + (scoring() ? "<span>" + totals().all + " points</span>" : "") + "</p>";
+  }
+  function teamInfo() { return (sess && C && C.teams && C.teams[sess.team]) || {}; }
+  function rulesList() {
+    if (!C.rules || !C.rules.length) return "";
+    var h = "<ul class=\"plain\">";
+    C.rules.forEach(function (r) { h += "<li>" + esc(r) + "</li>"; });
+    return h + "</ul>";
+  }
+  function contactHtml() {
+    var c = teamInfo().contact;
+    if (!c || !c.phone) return "";
+    var digits = c.phone.replace(/[^0-9]/g, "");
+    if (c.via === "whatsapp") return "<p>Lost your group? Message " + esc(c.name || "your guide") + " on WhatsApp: <a href=\"https://wa.me/" + digits + "\"><b>" + esc(c.phone) + "</b></a></p>";
+    return "<p>Lost your group? Call " + esc(c.name || "your guide") + ": <a href=\"tel:+" + digits + "\"><b>" + esc(c.phone) + "</b></a></p>";
   }
   function wildCount() { return Object.keys(state.wild).filter(function (k) { return state.wild[k]; }).length; }
 
@@ -318,15 +332,21 @@ a { color: var(--focus); }
   function recall() { return idb("readonly", function (s) { return s.get("session"); }).catch(function () { return null; }); }
   function forget() { return idb("readwrite", function (s) { return s.delete("session"); }).catch(function () {}); }
 
-  function setContent(c) {
+  /* Eine Station kann je Team abweichen: "byTeam": { "boeing": { "riddle": ... } } */
+  function setContent(c, team) {
     C = c;
-    stations = c.stations || [];
+    stations = (c.stations || []).map(function (s) {
+      var r = {}, o = s.byTeam && s.byTeam[team];
+      Object.keys(s).forEach(function (k) { if (k !== "byTeam") r[k] = s[k]; });
+      if (o) Object.keys(o).forEach(function (k) { r[k] = o[k]; });
+      return r;
+    });
     stations.forEach(function (s, i) { s.idx = i; s.num = (s.kind === "stop") ? i : 0; });
     N = stations.length - 2;
   }
   function openSession(key, store) {
     return openVault(key).then(function (v) {
-      setContent(v.content);
+      setContent(v.content, v.team);
       sess = { team: v.team, key: key };
       return loadState();
     }).then(function (d) {
@@ -337,10 +357,10 @@ a { color: var(--focus); }
     });
   }
   function unlock(pw) {
-    if (!pw || !pw.trim()) { ui.gateMsg = "Bitte das Passwort eingeben."; render(); return; }
+    if (!pw || !pw.trim()) { ui.gateMsg = "Please enter the password."; render(); return; }
     ui.busy = true; ui.gateMsg = ""; render();
     derive(pw).then(function (key) { return openSession(key, true); }).catch(function () {
-      ui.busy = false; ui.gateMsg = "Das Passwort passt nicht. Probiert es noch einmal."; render();
+      ui.busy = false; ui.gateMsg = "That password does not work. Please try again."; render();
       var p = $("#pw"); if (p) p.focus();
     });
   }
@@ -355,7 +375,7 @@ a { color: var(--focus); }
       var cls = cur ? "now" : (k <= maxI ? "done" : "");
       var nav = k <= maxI && k !== state.i;
       h += "<li class=\"" + cls + "\">" + (nav
-        ? "<button class=\"dot\" data-act=\"goto\" data-k=\"" + k + "\" aria-label=\"Zu " + esc(stations[k].name) + "\">" + label + "</button>"
+        ? "<button class=\"dot\" data-act=\"goto\" data-k=\"" + k + "\" aria-label=\"Go to " + esc(stations[k].name) + "\">" + label + "</button>"
         : "<span class=\"dot\">" + label + "</span>") + "</li>";
     }
     $("#route").innerHTML = h;
@@ -363,7 +383,7 @@ a { color: var(--focus); }
   function renderHeader() {
     document.body.classList.toggle("locked", !sess);
     $("#wn").textContent = String(wildCount());
-    $("#teamline").textContent = (sess && state.team) ? state.team : ((sess && C.subtitle) || "City Rallye");
+    $("#teamline").textContent = (sess && state.team) ? state.team : (sess ? (teamInfo().label || C.subtitle || "") : "City Rally");
     $("#clock").textContent = nowHM();
   }
 
@@ -371,41 +391,41 @@ a { color: var(--focus); }
     $("#route").innerHTML = "";
     var h;
     if (ui.booting) {
-      h = "<p class=\"eyebrow\">Start</p><h1>Einen Moment</h1><p class=\"muted\">Die Rallye wird geladen.</p>";
+      h = "<p class=\"eyebrow\">Start</p><h1>One moment</h1><p class=\"muted\">Loading the rally.</p>";
     } else if (!VAULT.slots || !VAULT.content) {
-      h = "<p class=\"eyebrow\">Start</p><h1>Noch nicht bereit</h1><p class=\"lead\">Die Rallye ist noch nicht eingerichtet.</p>";
+      h = "<p class=\"eyebrow\">Start</p><h1>Not ready yet</h1><p class=\"lead\">The rally has not been set up yet.</p>";
     } else {
-      h = "<p class=\"eyebrow\">Start</p><h1>Passwort</h1>";
-      h += "<p class=\"lead\">Gebt das Passwort ein, das ihr beim Briefing bekommt.</p>";
-      h += "<form id=\"gate\" novalidate><label class=\"field\" for=\"pw\">Passwort</label>";
+      h = "<p class=\"eyebrow\">Start</p><h1>Password</h1>";
+      h += "<p class=\"lead\">Enter the password you got at the briefing.</p>";
+      h += "<form id=\"gate\" novalidate><label class=\"field\" for=\"pw\">Password</label>";
       h += "<input type=\"password\" id=\"pw\" autocomplete=\"current-password\" autocapitalize=\"none\" autocorrect=\"off\" spellcheck=\"false\"" + (ui.busy ? " disabled" : "") + ">";
       if (ui.gateMsg) h += "<p class=\"msg bad\">" + esc(ui.gateMsg) + "</p>";
-      h += "<button class=\"btn primary\" type=\"submit\"" + (ui.busy ? " disabled" : "") + ">" + (ui.busy ? "Wird geprüft" : "Entsperren") + "</button></form>";
-      h += "<p class=\"muted\">Auf diesem Handy müsst ihr das Passwort nur einmal eingeben. Groß- und Kleinschreibung ist egal.</p>";
+      h += "<button class=\"btn primary\" type=\"submit\"" + (ui.busy ? " disabled" : "") + ">" + (ui.busy ? "Checking" : "Unlock") + "</button></form>";
+      h += "<p class=\"muted\">You only need to enter it once on this phone. Upper or lower case does not matter.</p>";
     }
     $("#stage").innerHTML = h;
   }
 
   function renderTravel(st) {
-    var label = st.kind === "finish" ? "Unterwegs zum Ziel" : "Unterwegs zu Station " + st.num;
-    var h = eyebrow(st.kind === "finish" ? "Letzte Etappe" : "Station " + st.num + " von " + N);
+    var label = st.kind === "finish" ? "On the way to the finish" : "On the way to stop " + st.num;
+    var h = eyebrow(st.kind === "finish" ? "Last leg" : "Stop " + st.num + " of " + N);
     h += "<h1>" + label + "</h1>";
-    h += "<div class=\"clue\"><div class=\"label\">Hinweis</div><p class=\"txt\">" + esc(st.riddle) + "</p></div>";
+    h += "<div class=\"clue\"><div class=\"label\">Clue</div><p class=\"txt\">" + esc(st.riddle) + "</p></div>";
     if (st.travelNote) h += "<p class=\"note\">" + esc(st.travelNote) + "</p>";
-    if (st.eta) h += "<p class=\"muted\">Richtwert: " + esc(st.eta) + ".</p>";
-    h += "<button class=\"btn primary\" data-act=\"arrive\">Wir sind da</button>";
+    if (st.eta) h += "<p class=\"muted\">Rough time: " + esc(st.eta) + ".</p>";
+    h += "<button class=\"btn primary\" data-act=\"arrive\">We are here</button>";
     if (state.helped[st.id]) {
-      h += "<div class=\"msg\">Euer Ziel: <b>" + esc(st.name) + "</b></div>";
+      h += "<div class=\"msg\">Your destination: <b>" + esc(st.name) + "</b></div>";
     } else if (ui.confirmHelp) {
-      h += "<div class=\"msg\">Das Ziel jetzt verraten?</div><div class=\"row\"><button class=\"btn small\" data-act=\"help-yes\">Ja, verraten</button><button class=\"btn small\" data-act=\"help-no\">Abbrechen</button></div>";
+      h += "<div class=\"msg\">Reveal the destination now?</div><div class=\"row\"><button class=\"btn small\" data-act=\"help-yes\">Yes, reveal it</button><button class=\"btn small\" data-act=\"help-no\">Cancel</button></div>";
     } else {
-      h += "<button class=\"btn small\" data-act=\"help-ask\">Ziel verraten</button>";
+      h += "<button class=\"btn small\" data-act=\"help-ask\">Reveal destination</button>";
     }
     $("#stage").innerHTML = h;
   }
 
   function groupCard(st, label, act) {
-    var text = st.groupPhoto === true ? "Alle zusammen aufs Bild." : st.groupPhoto;
+    var text = st.groupPhoto === true ? "Everyone together in the picture." : st.groupPhoto;
     return "<div class=\"group\"><p>" + esc(text) + "</p></div>" +
       "<button class=\"btn primary\" data-act=\"" + act + "\" data-id=\"" + esc(st.id) + "\">" + esc(label) + "</button>";
   }
@@ -418,7 +438,7 @@ a { color: var(--focus); }
 
   function choiceBlock(q, solved, wrongList, act, suffix, minus) {
     var h = "";
-    if (solved) return "<p class=\"msg ok\">Richtig: " + esc(q.answer) + esc(suffix || "") + "</p>";
+    if (solved) return "<p class=\"msg ok\">Correct: " + esc(q.answer) + esc(suffix || "") + "</p>";
     q.opts.forEach(function (o, k) {
       var off = wrongList.indexOf(k) >= 0;
       h += "<button class=\"btn opt\" data-act=\"" + act + "\" data-k=\"" + k + "\"" + (off ? " disabled" : "") + ">" + esc(o) +
@@ -436,7 +456,7 @@ a { color: var(--focus); }
        gather  Zusammenkommen, ggf. Wildcard-Tipp für die Wartezeit
        photo   Gruppenfoto (falls vorgesehen)
      Der Knopf des letzten Schritts zeigt das Rätsel für die nächste Etappe. */
-  var STEP_TITLE = { intro: "Willkommen", task: "Frage", gather: "Kommt zusammen", photo: "Zeit für ein Gruppenfoto" };
+  var STEP_TITLE = { intro: "Welcome", task: "Question", gather: "Regroup", photo: "Time for a group photo" };
 
   function steps(st) {
     var s = [];
@@ -448,22 +468,22 @@ a { color: var(--focus); }
   }
   function stepIndex(st) { return Math.min(state.sub[st.id] || 0, steps(st).length - 1); }
   function nextTitle(st) {
-    if (st.kind === "start") return "Erstes Rätsel";
+    if (st.kind === "start") return "First clue";
     var nx = stations[st.idx + 1];
-    return nx && nx.kind === "finish" ? "Rätsel für das Ziel" : "Nächstes Rätsel";
+    return nx && nx.kind === "finish" ? "Clue for the finish" : "Next clue";
   }
   function afterText(st) {
-    if (st.kind === "start") return "Danach geht es los mit dem ersten Rätsel";
+    if (st.kind === "start") return "Then off we go with the first clue";
     var nx = stations[st.idx + 1];
-    return nx && nx.kind === "finish" ? "Danach geht es weiter zum Ziel" : "Danach geht es weiter zur nächsten Station";
+    return nx && nx.kind === "finish" ? "Then on to the finish" : "Then on to the next stop";
   }
   function stepButton(label) { return "<button class=\"btn primary\" data-act=\"step\">" + esc(label) + "</button>"; }
 
   function stepSummary(st, step) {
     if (step === "intro") return state.team ? "Team " + state.team : "";
-    if (step === "task") return st.q ? "Richtig: " + st.q.answer + (scoring() ? ", " + qPoints(st) + " Pkt" : "") : "";
-    if (step === "gather") return "Alle da";
-    if (step === "photo") return "Gemacht";
+    if (step === "task") return st.q ? "Correct: " + st.q.answer + (scoring() ? ", " + qPoints(st) + " pts" : "") : "";
+    if (step === "gather") return "All here";
+    if (step === "photo") return "Done";
     return "";
   }
 
@@ -471,31 +491,32 @@ a { color: var(--focus); }
     var h = "";
     if (step === "intro") {
       if (st.intro) h += "<p class=\"lead\">" + esc(st.intro) + "</p>";
-      h += "<label class=\"field\" for=\"team\">Teamname (freiwillig)</label><input type=\"text\" id=\"team\" maxlength=\"40\" autocomplete=\"off\" value=\"" + esc(state.team) + "\" placeholder=\"Muss nicht sein\">";
-      h += "<div class=\"card\"><span class=\"tag\">Wildcards, freiwillig</span><p>Unterwegs könnt ihr kleine Zusatzaufgaben machen. Euer Team entscheidet, ob und welche. Sie landen in eurem Logbuch.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">Wildcards ansehen</button></div>";
-      h += stepButton(last ? nextTitle(st) + " zeigen" : "Weiter");
+      h += rulesList();
+      h += "<label class=\"field\" for=\"team\">Team name (optional)</label><input type=\"text\" id=\"team\" maxlength=\"40\" autocomplete=\"off\" value=\"" + esc(state.team) + "\" placeholder=\"Optional\">";
+      h += "<div class=\"card\"><span class=\"tag\">Wildcards, optional</span><p>Along the way you can do small extra challenges for bonus points. Your team decides if and which. They end up in your logbook.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">See wildcards</button></div>";
+      h += stepButton(last ? "Show " + nextTitle(st).toLowerCase() : "Next");
     } else if (step === "task") {
       if (st.note) h += "<p class=\"note\">" + esc(st.note) + "</p>";
       if (st.motif) {
         h += "<div class=\"card\"><span class=\"tag\">" + esc(st.photoTag || "Motivaufgabe") + "</span><p>" + esc(st.motif) + "</p>";
-        h += "<label class=\"check\" style=\"margin-bottom:-8px\"><input type=\"checkbox\" id=\"photo\"" + (state.photo[st.id] ? " checked" : "") + "><span>Foto ist gemacht</span></label></div>";
+        h += "<label class=\"check\" style=\"margin-bottom:-8px\"><input type=\"checkbox\" id=\"photo\"" + (state.photo[st.id] ? " checked" : "") + "><span>Photo taken</span></label></div>";
       }
       if (st.q) {
         var solvedQ = state.solved[st.id] === true, S = scoring();
         h += "<div class=\"card\"><div class=\"qhead\"><p>" + esc(st.q.text) + "</p>" +
-          (S ? "<span class=\"qpts\">" + (solvedQ ? qPoints(st) : S.question) + " Pkt</span>" : "") + "</div>";
+          (S ? "<span class=\"qpts\">" + (solvedQ ? qPoints(st) : S.question) + " pts</span>" : "") + "</div>";
         h += choiceBlock(st.q, solvedQ, state.wrong[st.id] || [], "pick", "", S ? S.wrong : 0);
         h += "</div>";
       }
-      if (ready(st)) h += stepButton(last ? nextTitle(st) + " zeigen" : "Weiter");
+      if (ready(st)) h += stepButton(last ? "Show " + nextTitle(st).toLowerCase() : "Next");
     } else if (step === "gather") {
-      h += "<p>Geht zu eurer Begleitung. Wenn alle da sind, geht es gemeinsam weiter. Den Weg zur nächsten Station führt diesmal eine andere Untergruppe an.</p>";
+      h += "<p>Go to your guide. When everyone is here, we move on together. This time, a different subgroup leads the way to the next stop.</p>";
       if (st.wildHint) {
-        h += "<div class=\"card\"><span class=\"tag\">Wildcard, freiwillig</span><p>Hier sind viele Leute unterwegs. Während ihr auf die anderen wartet, ist das eine gute Gelegenheit für eine Wildcard.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">Wildcards ansehen</button></div>";
+        h += "<div class=\"card\"><span class=\"tag\">Wildcard, optional</span><p>Lots of people around here. While you wait for the others, this is a good moment for a wildcard.</p><button class=\"btn small\" data-act=\"wild-open\" style=\"margin:0\">See wildcards</button></div>";
       }
-      h += stepButton(last ? nextTitle(st) + " zeigen" : "Alle sind da");
+      h += stepButton(last ? "Show " + nextTitle(st).toLowerCase() : "Everyone is here");
     } else if (step === "photo") {
-      h += groupCard(st, "Foto ist gemacht", "step");
+      h += groupCard(st, "Photo taken", "step");
     }
     return h;
   }
@@ -504,7 +525,7 @@ a { color: var(--focus); }
     var head = "<span class=\"st-title\">" + esc(title) + "</span>";
     if (summary) head += "<span class=\"st-sum\">" + esc(summary) + "</span>";
     var h = "<li class=\"step " + cls + "\">";
-    if (back !== undefined) h += "<button class=\"st-head back\" data-act=\"goto-step\" data-k=\"" + back + "\">" + head + "<span class=\"st-back\">zurück</span></button>";
+    if (back !== undefined) h += "<button class=\"st-head back\" data-act=\"goto-step\" data-k=\"" + back + "\">" + head + "<span class=\"st-back\">back</span></button>";
     else h += "<div class=\"st-head\">" + head + "</div>";
     if (body) h += "<div class=\"st-body\">" + body + "</div>";
     return h + "</li>";
@@ -513,7 +534,7 @@ a { color: var(--focus); }
   function renderHere(st) {
     var first = st.kind === "start";
     var list = steps(st), k = stepIndex(st);
-    var h = eyebrow(first ? "Start" : "Station " + st.num + " von " + N) + "<h1>" + esc(st.name) + "</h1>";
+    var h = eyebrow(first ? "Start" : "Stop " + st.num + " of " + N) + "<h1>" + esc(st.name) + "</h1>";
     h += "<ol class=\"steps\">";
     list.forEach(function (s, i) {
       if (i < k) h += stepItem("done", STEP_TITLE[s], stepSummary(st, s), "", i);
@@ -526,11 +547,12 @@ a { color: var(--focus); }
   }
 
   function logbook() {
-    var h = "<div class=\"card log\"><span class=\"tag\">Logbuch</span><h2>" + esc(state.team || "Euer Team") + "</h2>";
+    var h = "<div class=\"card log\"><span class=\"tag\">Logbook</span><h2>" + esc(state.team || teamInfo().label || "Your team") + "</h2>";
+    if (state.team && teamInfo().label) h += "<p class=\"muted\" style=\"margin:0\">" + esc(teamInfo().label) + "</p>";
     if (scoring()) {
       var t = totals();
-      h += "<div class=\"score\"><b>" + t.all + "</b><span>Punkte</span></div>";
-      h += "<p class=\"muted\" style=\"margin:0 0 8px\">Fragen: " + t.q + " Punkte" + (t.wrong ? " (" + t.wrong + (t.wrong === 1 ? " Fehlversuch" : " Fehlversuche") + ")" : "") + "<br>Wildcards: " + t.w + " Punkte</p>";
+      h += "<div class=\"score\"><b>" + t.all + "</b><span>points</span></div>";
+      h += "<p class=\"muted\" style=\"margin:0 0 8px\">Questions: " + t.q + " points" + (t.wrong ? " (" + t.wrong + (t.wrong === 1 ? " wrong answer" : " wrong answers") + ")" : "") + "<br>Wildcards: " + t.w + " points</p>";
     }
     if (C.dateLine) h += "<p class=\"muted\">" + esc(C.dateLine) + "</p>";
     h += "<ol class=\"logl\">";
@@ -542,10 +564,10 @@ a { color: var(--focus); }
     var done = (C.wild || []).filter(function (w) { return state.wild[w.id]; });
     if (done.length) {
       h += "<p style=\"margin:0\"><b>Wildcards</b></p><ul class=\"plain\" style=\"margin:4px 0 0\">";
-      done.forEach(function (w) { h += "<li>" + esc(w.short) + (wildPts(w) ? ", " + wildPts(w) + " Punkte" : "") + "</li>"; });
+      done.forEach(function (w) { h += "<li>" + esc(w.short) + (wildPts(w) ? ", " + wildPts(w) + " points" : "") + "</li>"; });
       h += "</ul>";
     } else {
-      h += "<p class=\"muted\" style=\"margin:0\">Keine Wildcards diesmal. Das ist völlig in Ordnung.</p>";
+      h += "<p class=\"muted\" style=\"margin:0\">No wildcards this time. That is completely fine.</p>";
     }
     h += "</div>";
     return h;
@@ -554,7 +576,7 @@ a { color: var(--focus); }
   function after() {
     var a = C.after;
     if (!a) return "";
-    var h = "<h2>" + esc(a.h || "Danach") + "</h2>";
+    var h = "<h2>" + esc(a.h || "Afterwards") + "</h2>";
     if (a.p) h += "<p>" + esc(a.p) + "</p>";
     if (a.items && a.items.length) {
       h += "<ul class=\"plain\">";
@@ -568,18 +590,18 @@ a { color: var(--focus); }
   function renderFinish() {
     var n = wildCount();
     var ziel = stations[stations.length - 1];
-    var h = eyebrow("Ziel erreicht") + "<h1>Geschafft" + (state.team ? ", " + esc(state.team) : "") + "</h1>";
-    h += "<p class=\"lead\">Ankunft um <b>" + esc(state.finish) + "</b>." + (ziel.arrival ? " " + esc(ziel.arrival) : "") + "</p>";
+    var h = eyebrow("Finish") + "<h1>You made it" + (state.team ? ", " + esc(state.team) : "") + "</h1>";
+    h += "<p class=\"lead\">Arrived at <b>" + esc(state.finish) + "</b>." + (ziel.arrival ? " " + esc(ziel.arrival) : "") + "</p>";
     if (ziel.groupPhoto) {
       var pd = !!state.groupDone[ziel.id];
-      h += "<ol class=\"steps\">" + (pd ? stepItem("done", STEP_TITLE.photo, "Gemacht", "", "photo")
-        : stepItem("now", STEP_TITLE.photo, "", groupCard(ziel, "Foto ist gemacht", "group-done")) + stepItem("after", "Danach kommt euer Logbuch")) + "</ol>";
+      h += "<ol class=\"steps\">" + (pd ? stepItem("done", STEP_TITLE.photo, "Done", "", "photo")
+        : stepItem("now", STEP_TITLE.photo, "", groupCard(ziel, "Photo taken", "group-done")) + stepItem("after", "Then your logbook")) + "</ol>";
       if (!pd) { $("#stage").innerHTML = h; return; }
     }
-    if (cfg("reward")) h += "<div class=\"card\"><span class=\"tag\">Für euch</span><p style=\"margin:0\">" + esc(cfg("reward")) + "</p></div>";
-    if (cfg("wildReward") && n > 0) h += "<div class=\"card\"><span class=\"tag\">Für eure Wildcards</span><p style=\"margin:0\">Ihr habt " + (n === 1 ? "eine Wildcard" : n + " Wildcards") + " geschafft. " + esc(cfg("wildReward")) + "</p></div>";
+    if (cfg("reward")) h += "<div class=\"card\"><span class=\"tag\">For you</span><p style=\"margin:0\">" + esc(cfg("reward")) + "</p></div>";
+    if (cfg("wildReward") && n > 0) h += "<div class=\"card\"><span class=\"tag\">For your wildcards</span><p style=\"margin:0\">You completed " + (n === 1 ? "one wildcard" : n + " wildcards") + ". " + esc(cfg("wildReward")) + "</p></div>";
     h += logbook();
-    h += "<p class=\"muted\">Macht einen Screenshot vom Logbuch als Erinnerung" + (scoring() ? " und vergleicht eure Punkte mit den anderen Teams." : ".") + "</p>";
+    h += "<p class=\"muted\">Take a screenshot of your logbook as a souvenir" + (scoring() ? " and compare your points with the other teams." : ".") + "</p>";
     h += after();
     $("#stage").innerHTML = h;
   }
@@ -595,35 +617,35 @@ a { color: var(--focus); }
   }
 
   function infoSheet() {
-    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Zurück zur Rallye</button>";
+    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Back to the rally</button>";
+    if (C.rules) h += "<h2>How it works</h2>" + rulesList();
     (C.info || []).forEach(function (sec) {
       h += "<h2>" + esc(sec.h) + "</h2>";
       if (sec.p) h += "<p>" + esc(sec.p) + "</p>";
       if (sec.list) { h += "<ul class=\"plain\">"; sec.list.forEach(function (li) { h += "<li>" + esc(li) + "</li>"; }); h += "</ul>"; }
     });
-    h += "<button class=\"btn small\" data-act=\"wild-open\">Wildcards ansehen</button>";
-    h += "<h2>Hilfe</h2><p>" + esc(cfg("help") || "Wenn ihr nicht weiterkommt oder etwas ist, sprecht die Orga an.") + "</p>";
-    var phone = cfg("orgaPhone");
-    if (phone) h += "<p>Gruppe verloren? Ruft " + esc(cfg("orgaName") || "die Orga") + " an: <a href=\"tel:" + esc(phone.replace(/[^0-9+]/g, "")) + "\"><b>" + esc(phone) + "</b></a></p>";
-    h += "<h2>Fortschritt</h2><p>Euer Stand wird auf diesem Handy gespeichert. Er bleibt erhalten, auch wenn ihr die Seite neu ladet oder den Browser schließt.</p>";
-    h += "<h2>Neu beginnen</h2>";
-    if (ui.confirmReset) h += "<p class=\"msg bad\">Alle Eingaben dieses Teams gehen verloren.</p><div class=\"row\"><button class=\"btn small\" data-act=\"reset-yes\">Ja, zurücksetzen</button><button class=\"btn small\" data-act=\"reset-no\">Abbrechen</button></div>";
-    else h += "<button class=\"btn small\" data-act=\"reset-ask\">Eingaben zurücksetzen</button>";
+    h += "<button class=\"btn small\" data-act=\"wild-open\">See wildcards</button>";
+    h += "<h2>Help</h2><p>" + esc(cfg("help") || "If you are stuck or something comes up, talk to your guide.") + "</p>";
+    h += contactHtml();
+    h += "<h2>Progress</h2><p>Your progress is saved on this phone. It stays even if you reload the page or close the browser.</p>";
+    h += "<h2>Start over</h2>";
+    if (ui.confirmReset) h += "<p class=\"msg bad\">All progress on this phone will be lost.</p><div class=\"row\"><button class=\"btn small\" data-act=\"reset-yes\">Yes, reset</button><button class=\"btn small\" data-act=\"reset-no\">Cancel</button></div>";
+    else h += "<button class=\"btn small\" data-act=\"reset-ask\">Reset progress</button>";
     return h;
   }
 
   function wildSheet() {
-    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Zurück zur Rallye</button>";
-    h += "<h2>Wildcards</h2><p>Freiwillige Zusatzaufgaben. Euer Team entscheidet, ob und welche es macht, und ihr könnt sie unterwegs jederzeit erledigen. Tippt danach auf den Knopf. Wer lieber nicht möchte, lässt es aus.</p>";
+    var h = "<button class=\"btn primary\" data-act=\"sheet-close\">Back to the rally</button>";
+    h += "<h2>Wildcards</h2><p>Optional extra challenges for bonus points. Your team decides if and which ones, and you can do them any time along the way. Tap the button once you have done one.</p>";
     var wild = C.wild || [], levels = [];
     wild.forEach(function (w) { if (levels.indexOf(w.lvl) < 0) levels.push(w.lvl); });
     levels.forEach(function (lvl) {
       var lp = scoring() && scoring().wild ? scoring().wild[lvl] : 0;
-      h += "<h3>" + esc(lvl) + (lp ? ", je " + lp + " Punkte" : "") + "</h3>";
+      h += "<h3>" + esc(lvl) + (lp ? ", " + lp + " points each" : "") + "</h3>";
       wild.filter(function (w) { return w.lvl === lvl; }).forEach(function (w) {
         var on = !!state.wild[w.id];
         h += "<div class=\"card" + (on ? " done" : "") + "\"><p>" + esc(w.t) + "</p>";
-        h += "<button class=\"btn small\" data-act=\"wild-toggle\" data-id=\"" + esc(w.id) + "\" style=\"margin:0\">" + (on ? "Erledigt, antippen zum Rückgängigmachen" : "Das haben wir gemacht") + "</button></div>";
+        h += "<button class=\"btn small\" data-act=\"wild-toggle\" data-id=\"" + esc(w.id) + "\" style=\"margin:0\">" + (on ? "Done, tap to undo" : "We did it") + "</button></div>";
       });
     });
     return h;
@@ -718,7 +740,7 @@ a { color: var(--focus); }
   function boot() {
     if (!(window.crypto && crypto.subtle && window.TextEncoder)) {
       renderHeader();
-      $("#stage").innerHTML = "<p class=\"eyebrow\">Start</p><h1>Browser zu alt</h1><p class=\"lead\">Dieser Browser kann die Rallye nicht entsperren. Öffnet die Seite bitte in einem aktuellen Safari oder Chrome.</p>";
+      $("#stage").innerHTML = "<p class=\"eyebrow\">Start</p><h1>Browser too old</h1><p class=\"lead\">This browser cannot unlock the rally. Please open the page in a current Safari or Chrome.</p>";
       return;
     }
     render();
